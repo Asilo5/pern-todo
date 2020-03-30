@@ -14,7 +14,7 @@ app.use(express.json());
 app.post('/todos', async (req, res) => {
   try {
     const { description } = req.body;
-    
+
     const newTodo = await pool.query("INSERT INTO todo (description) VALUES($1) RETURNING * ", 
     [description]);
 
@@ -26,11 +26,36 @@ app.post('/todos', async (req, res) => {
 
 // get all todos
 
+app.get('/todos', async (req, res) => {
+  try {
+    const allTodos = await pool.query("SELECT * FROM todo");
+    res.json(allTodos.rows);
+  } catch (err) {
+    console.error(err.message)
+  }
+});
+
 // get a todo 
+
+app.get('/todos/:id', async (req, res) => {
+  try {
+
+  } catch (err) {
+    console.error(err.message)
+  }
+});
 
 // update a todo
 
 // delete a todo
+
+app.delete('/todos/:id', async (req, res) => {
+   try {
+       
+   } catch (err) {
+    console.error(err.message) 
+   }
+});
 
 app.listen(5000, () => {
   console.log('Server has started on port 5000')
